@@ -3,7 +3,7 @@ title: "個人で10体のAI Agentを運用して生活を自動化した話"
 emoji: "🤖"
 type: "tech"
 topics: ["OpenClaw", "AI", "Agent", "自動化", "LLM"]
-published: false
+published: true
 ---
 
 ## はじめに
