@@ -1,8 +1,8 @@
 ---
 title: "miniPC同梱サービスのために、DashboardをLite化した話"
-emoji: "🖥️"
+emoji: "🤖"
 type: "tech"
-topics: ["flask", "python", "frontend", "spa", "openclaw"]
+topics: ["OpenClaw", "AI", "自動化"]
 published: true
 ---
 
@@ -129,7 +129,7 @@ def detect_oc_path():
 
 ## 実際に動かして確認したこと
 
-内部テストサーバーでテスト起動して確認した項目：
+infraノード（192.168.3.33）でテスト起動して確認した項目：
 
 - `/api/simple-tasks` → プロジェクト一覧が返る
 - `/api/node/status` → `active`, OpenClaw v2026.2.26 を返す
@@ -145,4 +145,7 @@ def detect_oc_path():
 
 次にフルダッシュ側を触るときは、Lite版を参考にしてシンプルな実装パターンを逆輸入できるかもしれない。
 
-<!-- 本文已脱敏处理: IP等敏感信息已替换 -->
+---
+
+**タグ案**: `flask`, `spa`, `minipc`, `dashboard`, `python`, `frontend`, `リファクタリング`, `openclaw`
+
