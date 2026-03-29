@@ -1,13 +1,5 @@
 ---
 title: "Multi-Agent環境の記憶システム設計 — PostgreSQL+pgvectorで「忘れないAI」を作る"
-emoji: "🤖"
-type: "tech"
-topics: ["OpenClaw", "AI", "自動化"]
-published: true
----
-
----
-title: "Multi-Agent環境の記憶システム設計 — PostgreSQL+pgvectorで「忘れないAI」を作る"
 emoji: "🧠"
 type: "tech"
 topics: ["OpenClaw", "pgvector", "PostgreSQL", "multiagent", "RAG"]
@@ -123,4 +115,3 @@ OpenClawのセッションログはevent-basedなJSONL形式で、1行1メッセ
 AIエージェントの記憶は「全部DB」か「全部ファイル」の二択ではない。それぞれの強みを活かした併用アーキテクチャが、少なくとも我々の20エージェント環境では最も実用的だった。完璧を目指すより、まず動く仕組みを作って運用しながら改善する——インフラ屋の鉄則はAI記憶システムにも当てはまる。
 
 <!-- 本文已脱敏处理: IP/密码/Token等敏感信息已替换 -->
-
