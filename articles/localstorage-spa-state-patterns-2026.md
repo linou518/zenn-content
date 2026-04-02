@@ -1,8 +1,8 @@
 ---
-title: "localStorage でSPAの状態を"覚えさせる"——3つの実装パターンと落とし穴"
+title: "localStorage でSPAの状態を覚えさせる——3つの実装パターンと落とし穴"
 emoji: "💾"
 type: "tech"
-topics: ["JavaScript", "localStorage", "SPA", "フロントエンド", "WebStorage"]
+topics: ["JavaScript", "localStorage", "SPA", "フロントエンド", "個人開発"]
 published: true
 ---
 
@@ -75,20 +75,20 @@ loadTheme(); // DOMContentLoaded を待たず即実行
 
 ## パターン3: APIレスポンスのキャッシュ（Stale-While-Revalidate）
 
-複数台のサーバー状態を取得するAPIは、内部でSSHを叩くので数秒かかる。その間ユーザーは白い画面を見ることになる。
+22台のノード状態を取得するAPI（`/api/nodes-status`）は、SSHで全台を叩くので3秒かかる。その間ユーザーは白い画面を見ることになる。
 
 解決策は **Stale-While-Revalidate パターン**。前回のレスポンスを localStorage に突っ込んでおき、次回アクセス時はまずキャッシュを描画→裏でAPIを叩いて差し替える。
 
 ```javascript
-const CACHE_KEY = 'nodes_cache';
+const NM_CACHE_KEY = 'nm_nodes_cache';
 
-async function fetchNodes() {
+async function nmFetchNodes() {
   // Step 1: キャッシュがあればまず描画（白屏回避）
-  const cached = localStorage.getItem(CACHE_KEY);
+  const cached = localStorage.getItem(NM_CACHE_KEY);
   if (cached) {
     try {
-      nodes = JSON.parse(cached);
-      renderAll();  // 古いデータでもいいから見せる
+      nmNodes = JSON.parse(cached);
+      nmRenderAll();  // 古いデータでもいいから見せる
     } catch(e) {}
   }
 
@@ -97,9 +97,9 @@ async function fetchNodes() {
     const r = await fetch("/api/nodes-status");
     if (r.ok) {
       const data = await r.json();
-      nodes = data.nodes;
-      localStorage.setItem(CACHE_KEY, JSON.stringify(data.nodes));
-      renderAll();  // 最新データで再描画
+      nmNodes = data.nodes;
+      localStorage.setItem(NM_CACHE_KEY, JSON.stringify(data.nodes));
+      nmRenderAll();  // 最新データで再描画
     }
   } catch(e) {
     console.error("API error", e);
@@ -107,8 +107,8 @@ async function fetchNodes() {
 
   // Step 3: キャッシュもAPIもダメならハードコードデータ
   if (!cached) {
-    nodes = getLocalNodeData();
-    renderAll();
+    nmNodes = getLocalNodeData();
+    nmRenderAll();
   }
 }
 ```
@@ -136,3 +136,5 @@ async function fetchNodes() {
 | APIキャッシュ | JSON文字列 | 5MB制限 + 鮮度管理 |
 
 フレームワークの persist プラグインがやっていることを手動でやっているだけだが、**素のJSだと「何がどう永続化されているか」が全部見える**のは利点でもある。ブラックボックスのミドルウェアより、3行の `getItem/setItem` のほうがデバッグは楽だ。
+
+<!-- 本文已脱敏処理済み -->
